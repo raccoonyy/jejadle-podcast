@@ -8,18 +8,18 @@ from grabber.models import *
 BEFORE_RSS = unicode("""<?xml version="1.0" encoding="utf-8"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/DTDs/Podcast-1.0.dtd" version="2.0">
 <channel>
-<title>제자들교회 설교 팟캐스트</title>
+<title>제자들교회 주일설교 팟캐스트</title>
 <itunes:author>제자들</itunes:author>
 <link>http://www.jejadle.org/</link>
-<description>제자들교회 설교 팟캐스트입니다. 아직까지는 금요예배 설교만 제공됩니다.</description>
-<itunes:subtitle>제자들교회 설교 팟캐스트입니다. 아직까지는 금요예배 설교만 제공됩니다.</itunes:subtitle>
+<description>제자들교회 주일설교 팟캐스트입니다.</description>
+<itunes:subtitle>제자들교회 주일설교 팟캐스트입니다.</itunes:subtitle>
 <language>ko</language>
 <copyright>copyright</copyright>
 <itunes:owner>
 <itunes:name>raccoony</itunes:name>
 <itunes:email>raccoonyy@gmail.com</itunes:email>
 </itunes:owner>
-<itunes:image href="http://jejadle-podcast.appspot.com/img/jejadle.png" />
+<itunes:image href="http://jejadlepod.herokuapp.com/static/img/jejadle.png" />
 """, "utf-8")
 
 AFTER_RSS = unicode("""
@@ -30,7 +30,7 @@ AFTER_RSS = unicode("""
 ITEM_RSS = unicode("""
 <item>
 <title>%s</title>
-<itunes:author>제자들</itunes:author>
+<itunes:author>제자들교회</itunes:author>
 <description>%s</description>
 <itunes:subtitle>%s</itunes:subtitle>
 <enclosure url="%s" type="audio/mpeg" />
