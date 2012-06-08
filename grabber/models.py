@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import urllib2
 
 BASE_URL= "http://www.jejadle.org/board/"
-BOARD_URL= url= "http://www.jejadle.org/board/board.asp?tn=sun_sermon"
+BOARD_URL= "http://www.jejadle.org/board/board.asp?tn=sun_sermon"
 
 class Grabber( models.Model ):
     def url2soup(self, url):
