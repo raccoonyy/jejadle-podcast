@@ -44,7 +44,7 @@ def main_page(request):
     return render( request, 'main.html' )
 
 def print_rss(request):
-    sermons= Sermon.objects.order_by('-id')
+    sermons= Sermon.objects.order_by('-num')
 
     items= ""
     for sermon in sermons:
