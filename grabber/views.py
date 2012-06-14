@@ -35,6 +35,7 @@ ITEM_RSS = unicode("""
 <itunes:subtitle>%s</itunes:subtitle>
 <enclosure url="%s" type="audio/mpeg" />
 <guid>%s</guid>
+<pubDate>%s</pubDate>
 <itunes:category text="Christianity">
 </itunes:category>
 </item>""", "utf-8")
@@ -48,7 +49,7 @@ def print_rss(request):
 
     items= ""
     for sermon in sermons:
-        items+= ITEM_RSS % ( sermon.title, sermon.scripture, sermon.title, sermon.url, sermon.url)
+        items+= ITEM_RSS % ( sermon.title, sermon.scripture, sermon.title, sermon.url, sermon.url, sermon.pubdate)
 
     rss= BEFORE_RSS + items + AFTER_RSS
     return HttpResponse( rss, content_type="text/xml" )

@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 from bs4 import BeautifulSoup
 import urllib2
 
@@ -36,11 +37,13 @@ class Grabber( models.Model ):
             scripture= self.get_scripture( script_url )
 
             if self.is_new_sermon( url ):
+                date= self.parse_date( url )
                 s= Sermon.objects.create(
                     num= num,
                     title= title,
                     url= url,
-                    scripture= scripture
+                    scripture= scripture,
+                    pubdate= date
                 )
                 s.save()
         post_count_sermon= Sermon.objects.count()
@@ -49,6 +52,16 @@ class Grabber( models.Model ):
             return True
         else:
             return False
+
+    def parse_date( self, url ):
+        import re
+        pat= "\d{6}"
+        string= re.findall(pat, url)[0]
+        year= int("20" + string[0:2])
+        month= int(string[2:4])
+        day= int(string[4:6])
+
+        return datetime(year, month, day)
 
     def is_new_sermon(self, url):
         sermon_urls= [sermon.url for sermon in Sermon.objects.all()]
@@ -74,7 +87,13 @@ class Sermon( models.Model ):
     num= models.IntegerField( blank=False )
     title= models.CharField( max_length= 100, blank=False )
     url = models.CharField( max_length= 200, blank=False )
-    scripture = models.TextField( blank= True )
+    scripture = models.TextField( blank= True, default="" )
+    pubdate = models.DateTimeField( blank= True, auto_now= True, default=datetime.today)
 
     def __unicode__(self):
-        return unicode( "num: %s / title: %s" % ( str( self.num ), self.title ) )
+        import time
+
+        d= self.pubdate
+        date= time.asctime( d.timetuple() )
+        return unicode( "num: %s - (%s) title: %s" % ( str( self.num ), date, self.title ) )
+        # return unicode( "num: %s - title: %s" % ( str( self.num ), self.title ) )
