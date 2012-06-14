@@ -1,6 +1,7 @@
 Django==1.4
 South==0.7.5
 beautifulsoup4==4.1.0
+django-extensions==0.9
 gunicorn==0.14.3
 ipython==0.12.1
 lxml==2.3.4
