@@ -55,8 +55,15 @@ class Grabber( models.Model ):
 
     def parse_date( self, url ):
         import re
-        pat= "\d{6}"
-        string= re.findall(pat, url)[0]
+        pat= "\d{8}"
+        string= ""
+        try:
+            string= re.findall(pat, url)[0]
+            string= string[2:8]
+        except:
+            pat= "\d{6}"
+            string= re.findall(pat, url)[0]
+
         year= int("20" + string[0:2])
         month= int(string[2:4])
         day= int(string[4:6])
@@ -88,12 +95,11 @@ class Sermon( models.Model ):
     title= models.CharField( max_length= 100, blank=False )
     url = models.CharField( max_length= 200, blank=False )
     scripture = models.TextField( blank= True, default="" )
-    pubdate = models.DateTimeField( blank= True, auto_now= True, default=datetime.today)
+    pubdate = models.DateTimeField( blank= True, auto_now= True)
 
     def __unicode__(self):
         import time
 
-        d= self.pubdate
-        date= time.asctime( d.timetuple() )
+        date= time.asctime( self.pubdate.timetuple() )
         return unicode( "num: %s - (%s) title: %s" % ( str( self.num ), date, self.title ) )
         # return unicode( "num: %s - title: %s" % ( str( self.num ), self.title ) )
