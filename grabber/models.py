@@ -37,13 +37,12 @@ class Grabber( models.Model ):
             scripture= self.get_scripture( script_url )
 
             if self.is_new_sermon( url ):
-                date= self.parse_date( url )
                 s= Sermon.objects.create(
                     num= num,
                     title= title,
                     url= url,
                     scripture= scripture,
-                    pubdate= date
+                    pubdate= self.parse_date( url )
                 )
                 s.save()
         post_count_sermon= Sermon.objects.count()
@@ -95,7 +94,7 @@ class Sermon( models.Model ):
     title= models.CharField( max_length= 100, blank=False )
     url = models.CharField( max_length= 200, blank=False )
     scripture = models.TextField( blank= True, default="" )
-    pubdate = models.DateTimeField( blank= True, auto_now= True)
+    pubdate = models.DateTimeField( blank= True, auto_now= False)
 
     def __unicode__(self):
         import time
