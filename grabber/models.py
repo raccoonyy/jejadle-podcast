@@ -42,7 +42,7 @@ class Grabber( models.Model ):
                     title= title,
                     url= url,
                     scripture= scripture,
-                    pubdate= self.parse_date( url )
+                    date= self.parse_date( url )
                 )
                 s.save()
         post_count_sermon= Sermon.objects.count()
@@ -94,11 +94,16 @@ class Sermon( models.Model ):
     title= models.CharField( max_length= 100, blank=False )
     url = models.CharField( max_length= 200, blank=False )
     scripture = models.TextField( blank= True, default="" )
-    pubdate = models.DateTimeField( blank= True, auto_now= False)
+    date = models.DateTimeField( blank= True, default=datetime.now, null= True)
+
+    def _get_date(self):
+        import time
+        from email import utils
+        timestamp= time.mktime( self.date.timetuple() )
+        return utils.formatdate( timestamp )
 
     def __unicode__(self):
-        import time
-
-        date= time.asctime( self.pubdate.timetuple() )
-        return unicode( "num: %s - (%s) title: %s" % ( str( self.num ), date, self.title ) )
+        return unicode( "num: %s - (%s) title: %s" % ( str( self.num ), self.pubdate, self.title ) )
         # return unicode( "num: %s - title: %s" % ( str( self.num ), self.title ) )
+
+    pubdate= property(_get_date)

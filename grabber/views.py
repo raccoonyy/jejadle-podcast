@@ -45,6 +45,7 @@ def main_page(request):
     return render( request, 'main.html' )
 
 def print_rss(request):
+    import time
     sermons= Sermon.objects.order_by('-num')
 
     items= ""
