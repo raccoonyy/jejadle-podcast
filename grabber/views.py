@@ -50,6 +50,7 @@ def print_rss(request):
 
     items= ""
     for sermon in sermons:
+        guid= "jejadle_sunday_sermon_" + str(sermon.id)
         items+= ITEM_RSS % ( sermon.title, sermon.scripture, sermon.title, sermon.url, sermon.url, sermon.pubdate)
 
     rss= BEFORE_RSS + items + AFTER_RSS
